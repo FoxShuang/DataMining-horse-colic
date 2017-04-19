@@ -37,8 +37,8 @@ attr_info = [['surgery','nominal'],
 			['cp_data_list','nominal']]
 
 def data_distance(line1, line2):
-	vector1 = [x for x in line1 if x != '?' && line2[line1.index(x)] != '?']
-	vector2 = [x for x in line2 if x != '?' && line1[line2.index(x)] != '?']
+	vector1 = [x for x in line1 if x != '?' & line2[line1.index(x)] != '?']
+	vector2 = [x for x in line2 if x != '?' & line1[line2.index(x)] != '?']
 	sqDiffVector = vector1-vector2  
     sqDiffVector=sqDiffVector**2  
     sqDistances = sqDiffVector.sum()  
