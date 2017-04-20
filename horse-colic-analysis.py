@@ -128,7 +128,7 @@ def data_preprocessing(case_name, attr_list, horse_colic_list):
 		max_frequency_list = numpy.transpose(max_frequency_attr_list).tolist()
 		for item in max_frequency_list:
 			max_frequency_str = list2str(item)
-			max_frequency_file.write(max_frequency_str)
+			# max_frequency_file.write(max_frequency_str)
 		max_frequency_file.close()
 	
 	elif case_name == 'hotdeck':
@@ -193,7 +193,7 @@ def data_preprocessing(case_name, attr_list, horse_colic_list):
 				temp_list[uncomplete_index] = corr_list[uncomplete_index]
 			hotdeck_list.append(temp_list)
 			hotdeck_str = list2str(hotdeck_list[i])
-			hotdeck_file.write(hotdeck_str)
+			# hotdeck_file.write(hotdeck_str)
 		hotdeck_attr_list = numpy.transpose(hotdeck_list).tolist()
 		hotdeck_file.close()
 		
@@ -251,7 +251,7 @@ def data_preprocessing(case_name, attr_list, horse_colic_list):
 					continue
 			k_means_list.append(temp_list)
 			k_means_str = list2str(temp_list)
-			k_means_file.write(k_means_str)
+			# k_means_file.write(k_means_str)
 		k_means_file.close()
 		k_means_attr_list = numpy.transpose(k_means_list).tolist()
 
@@ -260,12 +260,15 @@ def data_preprocessing(case_name, attr_list, horse_colic_list):
 
 #data abstract-----1-nominal attr frequency/2-numeric attr max & min & mean & middle & 1/4 & missing
 def data_abstract(each_attr_list, attr_flag, num):
+	# print 'ATTRIBUTION' + '  ' + str(num) + ':' + ' ' + attr_info[num][0] + '\n'
 	each_attr_set = []
 	each_attr_abstract = []
 	if attr_flag == 'nominal':
+		# print '-------------nominal---------------'+ '\n'
 		each_attr_set = set(each_attr_list)
 		for item in each_attr_set:
 			each_attr_abstract.append({item: each_attr_list.count(item)})
+			# print str(item)+':'+' '+str(each_attr_list.count(item))+ '\n'
 		return each_attr_abstract
 
 	elif attr_flag == 'numeric':
@@ -279,13 +282,27 @@ def data_abstract(each_attr_list, attr_flag, num):
 		each_attr_abstract.append(numpy.median(each_attr_list))
 		each_attr_abstract.append(numpy.percentile(each_attr_list,25))
 		each_attr_abstract.append(numpy.percentile(each_attr_list,75))
+		# print '-------------numeric---------------'+ '\n'
+		# print 'missing data: '+ str(each_attr_abstract[0])+ '\n'
+		# print 'max: '+ str(each_attr_abstract[1])+ '\n'
+		# print 'min: '+ str(each_attr_abstract[2])+ '\n'
+		# print 'mean: '+str(each_attr_abstract[3])+ '\n'
+		# print 'median: '+ str(each_attr_abstract[4])+ '\n'
+		# print '1/4 point: '+str(each_attr_abstract[5])+ '\n'
+		# print '3/4 point: '+str(each_attr_abstract[6])+ '\n'
 
 		pyplot.figure(1)
+		image_title = './image-method4/' + attr_info[num][0]+'hist.jpg'
 		pyplot.hist(each_attr_list, 100)
+		pyplot.title(attr_info[num][0])
+		pyplot.savefig(image_title)
 		pyplot.show()
 
 		pyplot.figure(2)
+		image_title = './image-method4/' + attr_info[num][0]+'boxplot.jpg'
 		pyplot.boxplot(each_attr_list)
+		pyplot.title(attr_info[num][0])
+		pyplot.savefig(image_title)
 		pyplot.show()
 		return each_attr_abstract
 
